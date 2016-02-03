@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <template>
+        <style>
+            ol { margin: 0; padding: 0; display: flex; }
+            li { padding: 15px 0 15px 30px; flex-grow: 1; list-style-type: none; position: relative; left: -30px; text-align: center; font-family: sans-serif; border-top: 1px solid #aaa; border-bottom: 1px solid #aaa; white-space: nowrap; opacity: .5; background-color: #FCFAFA; }
+            li:before, li:after { content: ''; display: block; position: absolute; width: 0; height: 0; border-top: 25px solid transparent; border-bottom: 25px solid transparent; top: -1px; }
+            li:before { right: -29px; border-left:30px solid #666; z-index: 1; }
+            li:after { right: -28px; border-left:30px solid #FCFAFA; z-index: 2; }
+            li.complete, li.active { opacity: 1; }
+            li.complete { background-color: #BBE4AE; }
+            li.complete:after { border-left-color: #BBE4AE; }
+            li.active { background-color: #FFD17B; }
+            li.active:after { border-left-color: #FFD17B; }
+        </style>
+        <ol>
+            <li class="complete">Step 1</li>
+            <li class="active">Step 2</li>
+            <li>Step 3</li>
+            <li>Step 4</li>
+            <li>Step 5</li>
+        </ol>
+    </template>
+</body>
+</html>
