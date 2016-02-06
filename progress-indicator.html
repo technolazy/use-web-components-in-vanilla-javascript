@@ -1,48 +1,32 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    <meta charset="utf-8" />
-</head>
-<body>
-    <template>
-        <style>
-            ol { margin: 0; padding: 0; display: flex; }
-            ::content step { padding: 15px 0 15px 30px; flex-grow: 1; list-style-type: none; position: relative; left: -30px; text-align: center; font-family: sans-serif; border-top: 1px solid #aaa; border-bottom: 1px solid #aaa; white-space: nowrap; opacity: .5; background-color: #FCFAFA; }
-            ::content step:before, ::content step:after { content: ''; display: block; position: absolute; width: 0; height: 0; border-top: 25px solid transparent; border-bottom: 25px solid transparent; top: -1px; }
-            ::content step:before { right: -29px; border-left:30px solid #666; z-index: 1; }
-            ::content step:after { right: -28px; border-left:30px solid #FCFAFA; z-index: 2; }
-            ::content step.complete, ::content step.active { opacity: 1; }
-            ::content step.complete { background-color: #BBE4AE; }
-            ::content step.complete:after { border-left-color: #BBE4AE; }
-            ::content step.active { background-color: #FFD17B; }
-            ::content step.active:after { border-left-color: #FFD17B; }
-        </style>
-        <ol>
-            <content select="step"></content>
-        </ol>
-    </template>
+﻿<template id="progress-indicator-template">
+    <style>
+        ol { margin: 0; padding: 0; display: flex; }
+        ::content step { padding: 15px 0 15px 30px; flex-grow: 1; list-style-type: none; position: relative; left: -30px; text-align: center; font-family: sans-serif; border-top: 1px solid #aaa; border-bottom: 1px solid #aaa; white-space: nowrap; opacity: .5; background-color: #FCFAFA; }
+        ::content step:before, ::content step:after { content: ''; display: block; position: absolute; width: 0; height: 0; border-top: 25px solid transparent; border-bottom: 25px solid transparent; top: -1px; }
+        ::content step:before { right: -29px; border-left:30px solid #666; z-index: 1; }
+        ::content step:after { right: -28px; border-left:30px solid #FCFAFA; z-index: 2; }
+        ::content step.complete, ::content step.active { opacity: 1; }
+        ::content step.complete { background-color: #BBE4AE; }
+        ::content step.complete:after { border-left-color: #BBE4AE; }
+        ::content step.active { background-color: #FFD17B; }
+        ::content step.active:after { border-left-color: #FFD17B; }
+    </style>
+    <ol>
+        <content select="step"></content>
+    </ol>
+</template>
 
-    <progress-indicator>
-        <step class="complete">Step 1</step>
-        <step class="active">Step 2</step>
-        <step>Step 3</step>
-        <step>Step 4</step>
-        <step>Step 5</step>
-    </progress-indicator>
+<script>
+    var template = document.currentScript.ownerDocument.querySelector('template'),
+        progressIndicatorProto = Object.create(HTMLElement.prototype);
 
-    <script>
-        var template = document.querySelector('template'),
-            progressIndicatorProto = Object.create(HTMLElement.prototype);
+    progressIndicatorProto.createdCallback = function () {
+        var root = this.createShadowRoot();
+        root.appendChild(document.importNode(template.content, true));
+    }
 
-        progressIndicatorProto.createdCallback = function () {
-            var root = this.createShadowRoot();
-            root.appendChild(document.importNode(template.content, true));
-        }
+    var progressIndicator = document.registerElement('progress-indicator', {
+        prototype: progressIndicatorProto
+    });
+</script>
 
-        var progressIndicator = document.registerElement('progress-indicator', {
-            prototype: progressIndicatorProto
-        });
-    </script>
-</body>
-</html>
